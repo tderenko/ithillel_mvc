@@ -13,5 +13,9 @@
             "email": "tarasid23@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "larapack/dd": "^1.1",
+        "vlucas/phpdotenv": "^5.4",
+        "ext-pdo": "*"
+    }
 }

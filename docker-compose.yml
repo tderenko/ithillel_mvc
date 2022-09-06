@@ -1,1 +1,50 @@
-version: 3
+version: '3'
+
+networks:
+  default:
+    driver: bridge
+
+volumes:
+  database:
+    driver: local
+
+services:
+  web:
+    image: nginx:1.17
+    ports:
+      - 8020:80
+    volumes:
+      - ./:/var/www/html
+      - .docker/web/conf:/etc/nginx/conf.d
+    depends_on:
+      - php
+    networks:
+      - default
+  php:
+    build:
+      context: ./
+      dockerfile: .docker/php/Dockerfile
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - db
+      - composer
+  db:
+    image: "mysql:8.0"
+    restart: always
+    ports:
+      - 36061:3606
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+    volumes:
+      - "database:/var/lib/mysql"
+    env_file:
+      - ./.env
+  composer:
+    image: composer
+    command: install
+    user: 1000:1000
+    volumes:
+      - ./:/app
