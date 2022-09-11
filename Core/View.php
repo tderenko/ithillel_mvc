@@ -11,7 +11,7 @@ class View
 
     public $layout = 'main';
 
-    public function render(string $template, array $data)
+    public function render(string $template, array $data = [])
     {
         ob_start();
         $this->renderPart($template, $data);

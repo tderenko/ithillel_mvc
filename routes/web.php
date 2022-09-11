@@ -11,7 +11,7 @@ $router->add('admin/posts/{id:\d+}/edit',
     ]
 );
 
-$router->add('admin/{type:\w+}/{id:\d+}/show',
+$router->add('admin/{type:\d+}/{id:\d+}/show',
     [
         'controller' => \App\Controllers\HomeController::class,
         'action' => 'show',
@@ -23,6 +23,22 @@ $router->add('',
     [
         'controller' => \App\Controllers\HomeController::class,
         'action' => 'index',
+        'method' => 'GET'
+    ]
+);
+
+$router->add('users',
+    [
+        'controller' => \App\Controllers\UserController::class,
+        'action' => 'index',
+        'method' => 'GET'
+    ]
+);
+
+$router->add('users/create',
+    [
+        'controller' => \App\Controllers\UserController::class,
+        'action' => 'create',
         'method' => 'GET'
     ]
 );
