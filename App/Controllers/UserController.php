@@ -27,7 +27,7 @@ class UserController extends Controller
 
     public function store()
     {
-
+        dd(App::$request);
     }
 
     public function edit()

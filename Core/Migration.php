@@ -50,5 +50,6 @@ class Migration
     {
         $query = $this->db->prepare('INSERT INTO migration (name) VALUES (:name)');
         $query->execute([':name' => $file]);
+        echo "Migration \"$file\" was done!!!", PHP_EOL;
     }
 }

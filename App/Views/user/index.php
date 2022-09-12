@@ -21,7 +21,7 @@
                 <td><?= $item->id; ?></td>
                 <td><?= $item->name ?></td>
                 <td><?= $item->surname ?></td>
-                <td><?= $item->birthday ?></td>
+                <td><?= $item->age ?></td>
                 <td><?= $item->email ?></td>
                 <td>
                     <a href="/?id=<?= $item->id ?>" class="btn btn-info">Info</a>
