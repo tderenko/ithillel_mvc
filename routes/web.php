@@ -26,3 +26,27 @@ $router->add('',
         'method' => 'GET'
     ]
 );
+
+$router->add('users',
+    [
+        'controller' => \App\Controllers\UserController::class,
+        'action' => 'index',
+        'method' => 'GET'
+    ]
+);
+
+$router->add('user/create',
+    [
+        'controller' => \App\Controllers\UserController::class,
+        'action' => 'create',
+        'method' => 'GET'
+    ]
+);
+
+$router->add('user/store',
+    [
+        'controller' => \App\Controllers\UserController::class,
+        'action' => 'store',
+        'method' => 'POST'
+    ]
+);

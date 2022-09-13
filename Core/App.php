@@ -9,8 +9,6 @@ use Core\Traits\DotSlice;
 
 class App
 {
-    use DotSlice;
-
     public static Request $request;
     public static \PDO $connect;
     public static self $app;
@@ -20,7 +18,7 @@ class App
     public array $params = [];
 
     public function __construct(
-        protected array $config
+        public Config $config
     ){}
 
     public function run()
@@ -48,6 +46,6 @@ class App
 
     public function getConfig(string $keys)
     {
-        return $this->getPiece($keys, $this->config);
+        return $this->config->getConfig($keys);
     }
 }
