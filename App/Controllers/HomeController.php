@@ -1,11 +1,8 @@
 <?php
 
-
 namespace App\Controllers;
 
-
-use App\Models\User;
-use Core\Controller;
+use Core\Base\Controller;
 
 class HomeController extends Controller
 {

@@ -5,8 +5,8 @@ namespace App\Middleware;
 
 
 use Core\App;
+use Core\Base\Middleware;
 use Core\DB;
-use Core\Middleware;
 use PDO;
 
 class ConnectionMiddleware extends Middleware

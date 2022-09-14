@@ -1,17 +1,13 @@
 <?php
 
-
 namespace App\Middleware;
 
-
-use App\Controllers\HomeController;
 use Core\App;
-use Core\Middleware;
+use Core\Base\Middleware;
 use Core\Router;
 
 class RouterMiddleware extends Middleware
 {
-
     public function process(App $app): bool
     {
         $router = new Router();

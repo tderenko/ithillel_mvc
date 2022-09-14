@@ -3,7 +3,7 @@
 namespace App\Middleware;
 
 use Core\App;
-use Core\Middleware;
+use Core\Base\Middleware;
 use Core\Request;
 use Core\View;
 

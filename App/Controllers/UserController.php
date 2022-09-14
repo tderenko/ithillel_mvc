@@ -4,7 +4,8 @@ namespace App\Controllers;
 
 use App\Models\User;
 use Core\App;
-use Core\Controller;
+use Core\Base\Controller;
+
 
 class UserController extends Controller
 {

@@ -1,6 +1,8 @@
 <?php
 
-namespace Core;
+namespace Core\Base;
+
+use Core\App;
 
 abstract class Middleware
 {
