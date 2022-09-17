@@ -7,5 +7,8 @@ use Core\Traits\DbRequests;
 abstract class Model
 {
     use DbRequests;
-    abstract static function getTableName(): string;
+    abstract public static function getTableName(): string;
+
+    public function before(){}
+    public function after(){}
 }

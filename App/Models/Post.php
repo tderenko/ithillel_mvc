@@ -4,18 +4,19 @@ namespace App\Models;
 
 use Core\Base\Model;
 
-class User extends Model
+class Post extends Model
 {
     public ?int $id = null;
-    public string $name;
-    public string $surname;
-    public string $email;
-    public string $age;
+    public ?int $category_id;
+    public string $title;
+    public string $content;
+    public int $author_id;
+    public ?string $thumbnail;
     public string $updated;
     public string $created;
 
     public static function getTableName(): string
     {
-        return 'users';
+        return 'posts';
     }
 }

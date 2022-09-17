@@ -2,7 +2,7 @@
 
 namespace Core\Exceptions;
 
-use Throwable;
+use Core\Base\BaseException;
 
 class ConsoleActionException extends BaseException
 {
