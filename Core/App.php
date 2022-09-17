@@ -2,17 +2,22 @@
 
 namespace Core;
 
+use App\Middleware\AuthMiddleware;
 use App\Middleware\BaseMiddleware;
 use App\Middleware\ConnectionMiddleware;
 use App\Middleware\RouterMiddleware;
-use Core\Traits\DotSlice;
+use App\Models\User;
+use Core\Base\Controller;
 
 class App
 {
     public static Request $request;
     public static \PDO $connect;
-    public static self $app;
     public static View $view;
+    public static ?User $user;
+    public static Session $session;
+    public static self $app;
+
     public Controller $controller;
     public string $action;
     public array $params = [];
@@ -39,8 +44,9 @@ class App
     {
         $middleware = new BaseMiddleware();
         $middleware
+            ->linkWith(new ConnectionMiddleware())
             ->linkWith(new RouterMiddleware())
-            ->linkWith(new ConnectionMiddleware());
+            ->linkWith(new AuthMiddleware());
         return $middleware->check($this);
     }
 

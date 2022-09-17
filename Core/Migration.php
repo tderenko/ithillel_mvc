@@ -14,12 +14,24 @@ class Migration
         $this->db = DB::init(new Config());
     }
 
+    public static function create(string $file = null)
+    {
+        if (!$file) {
+            throw new \Exception('Please write the file name!!!');
+        }
+
+        $file = preg_replace('/^([^\.]+).*/', time() . "_$1.sql", $file);
+        file_put_contents(static::PATH . "/$file", "#migration $file");
+        chmod(static::PATH . "/$file", 0777);
+    }
+
     public static function run()
     {
         $migration = new static();
         if (!$migration->isMigrationTable()) {
             $migration->makeMigrate('migration.sql');
         }
+
         foreach ($migration->getMigrationFiles() as $file) {
             $migration->makeMigrate($file)
                 ->store($file);

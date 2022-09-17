@@ -6,21 +6,25 @@ namespace Core;
 
 class Request
 {
+    protected string $scheme;
     protected string $host;
     protected string $path;
     protected string $method;
     protected string $query;
     protected string $agent;
+    protected string $referer;
     protected array $getParams = [];
     protected array $postParams = [];
 
     public function __construct()
     {
-        $this->host = $_SERVER['HTTP_HOST'];
-        $this->path = $_SERVER['REQUEST_URI'];
-        $this->method = $_SERVER['REQUEST_METHOD'];
-        $this->query = $_SERVER['QUERY_STRING'];
-        $this->agent = $_SERVER['HTTP_USER_AGENT'];
+        $this->scheme = $_SERVER['REQUEST_SCHEME'] ?? '';
+        $this->host = $_SERVER['HTTP_HOST'] ?? '';
+        $this->path = $_SERVER['REQUEST_URI'] ?? '';
+        $this->method = $_SERVER['REQUEST_METHOD'] ?? '';
+        $this->query = $_SERVER['QUERY_STRING'] ?? '';
+        $this->agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+        $this->referer = $_SERVER['HTTP_REFERER'] ?? '';
         $this->getParams = $_GET;
         $this->postParams = $_POST;
     }
@@ -81,5 +85,20 @@ class Request
         }
 
         return $this->postParams[$key] ?? null;
+    }
+
+    public function getReferer(): mixed
+    {
+        return $this->referer;
+    }
+
+    public function getScheme()
+    {
+        return $this->scheme;
+    }
+
+    public function getHostUrl(): string
+    {
+        return "{$this->scheme}://{$this->host}";
     }
 }

@@ -1,21 +1,17 @@
 <?php
 
-
 namespace Core;
 
+use Core\Base\Model;
 
 class DbRequestBuilder
 {
     private $table = '';
 
     public function __construct(
-        private string $class
+        private Model $model
     ){
-        if (!is_subclass_of($this->class, Model::class)) {
-            throw new \Exception("Class {$this->class} doesn't extend Model class");
-        }
-
-        $this->table = $this->class::getTableName();
+        $this->table = $this->model::getTableName();
     }
 
     private string $command = '';
@@ -112,18 +108,30 @@ class DbRequestBuilder
     public function get(): Model|array|null
     {
         $query = App::$connect->prepare($this->queryBuild());
-        $query->execute($this->bindParams);
-        if ($this->command === 'INSERT') {
-            $condition = ['id' => App::$connect->lastInsertId()];
-            $res = static::build($this->class)
-                ->select()
-                ->where($condition)
-                ->limit(1)
-                ->get();
-            return $res['0'] ?? null;
+
+        switch ($this->command) {
+            case 'INSERT':
+            case 'UPDATE':
+                $this->model->before();
         }
+
+        $query->execute($this->bindParams);
+
+        switch ($this->command) {
+            case 'INSERT':
+            case 'UPDATE':
+            if ($res = static::build($this->model)
+                ->select()
+                ->where(['id' => $this->model->id ?: App::$connect->lastInsertId()])
+                ->limit(1)
+                ->get()) {
+                $res['0']->after();
+                return $res[0];
+            }
+        }
+
         return $this->command === "SELECT"
-            ? $query->fetchAll(App::$connect::FETCH_CLASS, $this->class)
+            ? $query->fetchAll(App::$connect::FETCH_CLASS, $this->model::class)
             : null;
     }
 
@@ -132,9 +140,9 @@ class DbRequestBuilder
         return strtr($this->queryBuild(), $this->bindParams);
     }
 
-    public static function build(string $class): self
+    public static function build(Model $model): self
     {
-        return new static($class);
+        return new static($model);
     }
 
     protected function buildCondition(): string

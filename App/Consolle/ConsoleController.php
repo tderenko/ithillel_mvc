@@ -17,8 +17,18 @@ class ConsoleController extends BaseController
         echo PHP_EOL;
     }
 
-    public function migrate()
+    public function migrate(string $action = null, string $name = null)
     {
-        Migration::run();
+        if ($action) {
+            switch ($action) {
+                case 'create':
+                    Migration::create($name);
+                    break;
+                default:
+                    throw new \Exception("Action \"$action\" doesn't exists!!!");
+            }
+        } else {
+            Migration::run();
+        }
     }
 }
